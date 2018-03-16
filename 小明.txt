@@ -1,0 +1,79 @@
+#include <iostream>
+
+using namespace std;
+ 
+class people
+{
+public:
+	virtual void action()=0;
+	virtual void finish() { return; }
+	people(string,string);
+protected:
+	string name;
+	string sex;
+};
+
+class student :public people
+{
+public:
+	virtual void action();
+	virtual void finish();
+	student(string,string,int);
+protected:
+	int num;
+};
+
+class teacher:public people
+{
+public:
+	virtual void action();
+	teacher(string,string,string);
+protected:
+	string title;
+};
+
+void student::action()
+{
+	cout << "小明去学校了"<<endl;
+}
+
+void teacher::action()
+{
+	cout << "老师布置了作业"<<endl;
+}
+
+void student ::finish()
+{
+	cout << "小明完成了作业" << endl;
+}
+
+people::people(string N, string S)
+{
+	name = N;
+	sex = S;
+}
+
+student::student(string N1, string S1, int Num):people(N1,S1)
+{
+	num = Num;
+}
+
+teacher::teacher(string N2, string S2, string T) : people(N2, S2)
+{
+	title = T;
+}
+
+int main()
+{
+	student A = { "xiaoMing","Boy",250 };
+	teacher B = { "daMing","Boy","math" };
+	people * pt;
+	pt = &A;
+	pt->action();
+	pt = &B;
+	pt->action();
+	pt = &A;
+	pt->finish();
+	return 0;
+}
+
