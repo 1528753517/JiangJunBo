@@ -1,0 +1,128 @@
+#include<iostream>
+#include<string>
+#include<iomanip>
+using namespace std;
+class Human
+{
+public:
+	Human(string n, char s, int a)
+	{
+		name = n;
+		sex = s;
+		age = a;
+	}
+	string walk(string, string, char);//走路
+protected:
+	string name;//姓名
+	char sex;//性别
+	int age;//年龄
+};
+class SchoolHuman:public Human
+{
+public:
+	SchoolHuman(string n, char s, int a, string st, string p) :Human(n, s, a)
+	{
+		stage = st;
+		position = p;
+	}
+	char time(char);//判断个体是否处于课堂
+protected:
+	string stage;//阶段（小学、中学、大学）
+	string position;//职位（学生、老师）
+};
+class Teacher : public SchoolHuman
+{
+private:
+	string subject;//学科
+	string condition;//工作情况（兼职或全职）
+public:
+	Teacher(string n, char s, int a, string st, string p, string su, string c) :SchoolHuman(n, s, a, st, p)
+	{
+		subject = su;
+		condition = c;
+	}
+	char teaching(char);//判断老师是否正在授课
+	char assign(char);//判断老师是否布置了作业
+	char check(char);//批改作业
+};
+class Students: public SchoolHuman
+{
+private:
+	int grade;//年级
+	int clas;//班级
+	string number;//学号
+public:
+	Students(string n, char s, int a, string st, string p, int g, int c, string num) :SchoolHuman(n, s, a, st, p)
+	{
+		grade = g;
+		clas = c;
+		number = num;
+	}
+	char homework(char);//作业完成状态
+};
+string Human::walk(string starting, string destination, char answer)//从起点出发到达目的地，判断是否完成这个过程
+{
+	if (answer == 'Y')
+	{
+		cout << "# " << left << setw(10) << name << " : " << starting << " -> " << destination << endl;
+		return destination;
+	}
+	else
+	{
+		cout << "# " << left << setw(10) << name << " : " << "Still in " << starting << endl;
+		return starting;
+	}
+		
+}
+char SchoolHuman::time(char t)
+{
+	if (t == 'Y')
+		cout << "# " << left << setw(10) << name << " : In class" << endl;
+	else
+		cout << "# " << left << setw(10) << name << " : After class" << endl;
+	return t;
+}
+char Teacher::teaching(char t)
+{
+	if (t == 'Y')
+		cout << "# " << left << setw(10) << name << " : Teaching" << subject << endl;
+	else
+		cout << "# " << left << setw(10) << name << " : After class" << endl;
+	return t;
+}
+char Teacher::assign(char a)
+{
+	if(a=='Y')
+		cout << "# " << left << setw(10) << name << " : Already assign" << endl;
+	else
+		cout << "# " << left << setw(10) << name << " : Not assign yet" << endl;
+	return a;
+}
+char Teacher::check(char c)
+{
+	if(c=='Y')
+		cout << "# " << left << setw(10) << name << " : Already check" << endl;
+	else
+		cout << "# " << left << setw(10) << name << " : Not check yet" << endl;
+	return c;
+}
+char Students::homework(char h)
+{
+	if (h == 'Y')
+		cout << "# " << left << setw(10) << name << " : Homework finished" << endl;
+	else
+		cout << "# " << left << setw(10) << name << " : Not finished yet" << endl;
+	return h;
+}
+int main()
+{	
+	Teacher obj1("X", 'F', 40, "College", "Professor", "Higher Mathematics", "Part-time");
+	Students obj2("Xiao Ming", 'M', 20, "College", "Student", 1, 1, "2018018");
+	obj2.walk("home", "school",'Y');
+	obj2.time('Y');
+	obj1.teaching('Y');
+	obj1.assign('Y');
+	obj2.homework('Y');
+	obj2.walk("school", "home", 'Y');
+	return 0;
+}
