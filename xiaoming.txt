@@ -1,0 +1,101 @@
+#include<iostream>
+#include<string>
+#include<ctime>
+using namespace std;
+//声明类“人”
+class people
+{
+public:
+	people(string n);//定义构造函数
+	virtual void disply();//定义输出函数
+protected:
+	string name;
+
+
+};
+void people::disply()
+{
+	cout << "姓名" << name<<endl;
+}
+//#构造函数
+people::people(string n)
+{
+	name = n;
+}
+//由人派生学生
+class student:public people
+{
+public:
+	int homework;
+	void dohomework();//定义写作业
+	student(string a);//定义构造函数
+	virtual void disply();//定义输出函数
+
+	
+};
+//输出函数
+void student::disply()
+{
+	cout << "姓名" << name << endl;
+	cout << "作业内容为" << homework << endl;
+}
+//构造函数
+student::student(string a):people(a)
+{
+	homework=0;
+}
+//做作业函数
+void student::dohomework()
+{
+	homework *= 2;
+}
+
+//由人派生出老师
+class teacher :public people
+{
+public:
+	void decorate();//定义布置作业
+	teacher(student *a, string b);//定义构造函数
+	virtual void disply();
+private:
+	int title;//作业题
+	student *st1;//教的学生
+};
+void teacher::disply()
+{
+	cout << "姓名" << name << endl;
+	cout << "布置的作业" << title << endl;
+}
+//构造函数
+teacher::teacher(student *a, string b) :people(b)
+{
+	st1 = a;
+	title = 0;
+}
+//布置作业(生成随机数传给小明)函数
+void teacher::decorate()
+{
+	srand((unsigned)time(NULL));
+	title = rand()%1000;
+	st1->homework = title;
+}
+int main()
+{
+	//小明上学
+	student XM("xiaoming");//声明小明
+	student*p = &XM;
+	teacher TE(p, "dalao");//声明老师并声明其教的学生是小明
+	people*pt = &TE;
+	//老师布置作业
+	TE.decorate();
+	pt->disply();
+	pt = &XM;
+	//小明做作业
+	XM.dohomework();
+	pt->disply();
+	getchar();
+	
+
+
+}
+
