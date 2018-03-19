@@ -2,12 +2,12 @@
 #include<string>
 #include<ctime>
 using namespace std;
-//ÉùÃ÷Àà¡°ÈË¡±
+//å£°æ˜ç±»â€œäººâ€
 class people
 {
 public:
-	people(string n);//¶¨Òå¹¹Ôìº¯Êı
-	virtual void disply();//¶¨ÒåÊä³öº¯Êı
+	people(string n);//å®šä¹‰æ„é€ å‡½æ•°
+	virtual void disply();//å®šä¹‰è¾“å‡ºå‡½æ•°
 protected:
 	string name;
 
@@ -15,64 +15,64 @@ protected:
 };
 void people::disply()
 {
-	cout << "ĞÕÃû" << name<<endl;
+	cout << "å§“å" << name<<endl;
 }
-//#¹¹Ôìº¯Êı
+//#æ„é€ å‡½æ•°
 people::people(string n)
 {
 	name = n;
 }
-//ÓÉÈËÅÉÉúÑ§Éú
+//ç”±äººæ´¾ç”Ÿå­¦ç”Ÿ
 class student:public people
 {
 public:
 	int homework;
-	void dohomework();//¶¨ÒåĞ´×÷Òµ
-	student(string a);//¶¨Òå¹¹Ôìº¯Êı
-	virtual void disply();//¶¨ÒåÊä³öº¯Êı
+	void dohomework();//å®šä¹‰å†™ä½œä¸š
+	student(string a);//å®šä¹‰æ„é€ å‡½æ•°
+	virtual void disply();//å®šä¹‰è¾“å‡ºå‡½æ•°
 
 	
 };
-//Êä³öº¯Êı
+//è¾“å‡ºå‡½æ•°
 void student::disply()
 {
-	cout << "ĞÕÃû" << name << endl;
-	cout << "×÷ÒµÄÚÈİÎª" << homework << endl;
+	cout << "å§“å" << name << endl;
+	cout << "ä½œä¸šå†…å®¹ä¸º" << homework << endl;
 }
-//¹¹Ôìº¯Êı
+//æ„é€ å‡½æ•°
 student::student(string a):people(a)
 {
 	homework=0;
 }
-//×ö×÷Òµº¯Êı
+//åšä½œä¸šå‡½æ•°
 void student::dohomework()
 {
 	homework *= 2;
 }
 
-//ÓÉÈËÅÉÉú³öÀÏÊ¦
+//ç”±äººæ´¾ç”Ÿå‡ºè€å¸ˆ
 class teacher :public people
 {
 public:
-	void decorate();//¶¨Òå²¼ÖÃ×÷Òµ
-	teacher(student *a, string b);//¶¨Òå¹¹Ôìº¯Êı
+	void decorate();//å®šä¹‰å¸ƒç½®ä½œä¸š
+	teacher(student *a, string b);//å®šä¹‰æ„é€ å‡½æ•°
 	virtual void disply();
 private:
-	int title;//×÷ÒµÌâ
-	student *st1;//½ÌµÄÑ§Éú
+	int title;//ä½œä¸šé¢˜
+	student *st1;//æ•™çš„å­¦ç”Ÿ
 };
 void teacher::disply()
 {
-	cout << "ĞÕÃû" << name << endl;
-	cout << "²¼ÖÃµÄ×÷Òµ" << title << endl;
+	cout << "å§“å" << name << endl;
+	cout << "å¸ƒç½®çš„ä½œä¸š" << title << endl;
 }
-//¹¹Ôìº¯Êı
+//æ„é€ å‡½æ•°
 teacher::teacher(student *a, string b) :people(b)
 {
 	st1 = a;
 	title = 0;
 }
-//²¼ÖÃ×÷Òµ(Éú³ÉËæ»úÊı´«¸øĞ¡Ã÷)º¯Êı
+//å¸ƒç½®ä½œä¸š(ç”Ÿæˆéšæœºæ•°ä¼ ç»™å°æ˜)å‡½æ•°
 void teacher::decorate()
 {
 	srand((unsigned)time(NULL));
@@ -81,20 +81,19 @@ void teacher::decorate()
 }
 int main()
 {
-	//Ğ¡Ã÷ÉÏÑ§
-	student XM("xiaoming");//ÉùÃ÷Ğ¡Ã÷
+	//å°æ˜ä¸Šå­¦
+	student XM("xiaoming");//å£°æ˜å°æ˜
 	student*p = &XM;
-	teacher TE(p, "dalao");//ÉùÃ÷ÀÏÊ¦²¢ÉùÃ÷Æä½ÌµÄÑ§ÉúÊÇĞ¡Ã÷
+	teacher TE(p, "dalao");//å£°æ˜è€å¸ˆå¹¶å£°æ˜å…¶æ•™çš„å­¦ç”Ÿæ˜¯å°æ˜
 	people*pt = &TE;
-	//ÀÏÊ¦²¼ÖÃ×÷Òµ
+	//è€å¸ˆå¸ƒç½®ä½œä¸š
 	TE.decorate();
 	pt->disply();
 	pt = &XM;
-	//Ğ¡Ã÷×ö×÷Òµ
+	//å°æ˜åšä½œä¸š
 	XM.dohomework();
 	pt->disply();
-	getchar();
-	
+	return 0;
 
 
 }
