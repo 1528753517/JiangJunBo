@@ -1,0 +1,28 @@
+#include<iostream>
+using namespace std;
+class Data
+{
+private:
+	int n;
+public:
+	friend ostream& operator << (ostream& o, const Data& data)
+	{
+		o << data.n << endl;
+		o << "Overload successfully" << endl;
+		return o;
+	}
+	friend istream& operator >> (istream& i, Data& data)
+	{
+		i >> data.n;
+		cout << "Overload successfully" << endl;
+		return i;
+	}
+};
+int main()
+{
+	Data data;
+	cout << "Please input a number : ";
+	cin >> data;
+	cout << data;
+	return 0;
+}
