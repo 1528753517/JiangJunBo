@@ -13,7 +13,7 @@ public:
 };
 istream&operator >> (istream&input, student &a)
 {
-	cout << "请输入姓名和年龄"<<endl;
+	cout << "please enter name and age"<<endl;
 	input >> a.name >> a.age;
 	return input;
 }
@@ -28,8 +28,7 @@ int main()
 	student a;
 	cin >> a;
 	cout << a << endl;
-	getchar();
-	getchar();
+	return 0;
 
 }
 
