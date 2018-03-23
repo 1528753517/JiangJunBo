@@ -1,23 +1,23 @@
 #include<iostream>
 #include<string>
 using namespace std;
-//»ùÀàpeople
+//åŸºç±»people
 class people
 {
 public:
 	int homework[10];
-	people(string n,int a[10]);//ÉùÃ÷¹¹Ôìº¯Êı
-	virtual void disply();//ÉùÃ÷Êä³öº¯Êı
-	virtual void dohomework(int a[10]);//ÉùÃ÷´¦Àí×÷Òµº¯Êı
+	people(string n,int a[10]);//å£°æ˜æ„é€ å‡½æ•°
+	virtual void disply();//å£°æ˜è¾“å‡ºå‡½æ•°
+	virtual void dohomework(int a[10]);//å£°æ˜å¤„ç†ä½œä¸šå‡½æ•°
 private:
 	string name;
 };
-//×ö×÷Òµ 
+//åšä½œä¸š 
 void people::dohomework(int a[10])
 {
 	return;
 }
-//¹¹Ôìº¯Êı
+//æ„é€ å‡½æ•°
 people::people(string n,int a[10])
 {
 	int i;
@@ -27,12 +27,12 @@ people::people(string n,int a[10])
 	}
 	name = n;
 }
-//Êä³ö
+//è¾“å‡º
 void people::disply()
 {
 	int i;
-	cout << "ĞÕÃû:" << name << endl;
-	cout <<"×÷Òµ:" << endl;
+	cout << "å§“å:" << name << endl;
+	cout <<"ä½œä¸š:" << endl;
 	for (i = 0; i < 10; i++)
 	{
 		cout << homework[i] << " ";
@@ -41,60 +41,60 @@ void people::disply()
 	
 
 }
-//ÅÉÉú¿ìÅÅÑ§Éú a
+//æ´¾ç”Ÿå¿«æ’å­¦ç”Ÿ a
 class student_a :public people
 {
 public:
-	student_a(string n, int a[10]);//ÉùÃ÷¹¹Ôìº¯Êı
-	virtual void dohomework();//ÉùÃ÷×ö×÷Òµº¯Êı
-	void quickSort(int s[], int l, int r);//¿ìËÙÅÅĞò
+	student_a(string n, int a[10]);//å£°æ˜æ„é€ å‡½æ•°
+	virtual void dohomework();//å£°æ˜åšä½œä¸šå‡½æ•°
+	void quickSort(int s[], int l, int r);//å¿«é€Ÿæ’åº
 
 };
-//¹¹Ôìº¯Êıa
+//æ„é€ å‡½æ•°a
 student_a::student_a(string n, int a[10]) :people(n, a)
 {
 	;
 }
-//¿ìÅÅ×ö×÷Òµa
+//å¿«æ’åšä½œä¸ša
 void student_a::dohomework ()
 {
 	quickSort(homework, 0, 9);
 }
-//ÅÉÉú²åÅÅÑ§Éúb
+//æ´¾ç”Ÿæ’æ’å­¦ç”Ÿb
 class student_b :public people
 {
 public:
-	//¹¹Ôìº¯Êıb
+	//æ„é€ å‡½æ•°b
 	student_b(string n,int a[10]):people(n,a)
 	{
 		;
 	}
-	//ÉùÃ÷²åÈëÅÅĞò
+	//å£°æ˜æ’å…¥æ’åº
 	void insert(int arr[], int length);
-	//×ö×÷Òµ²åÈëÅÅĞòb
+	//åšä½œä¸šæ’å…¥æ’åºb
 	virtual void dohomework()
 	{
 		insert(homework, 10);
 	}
 	
 };
-//ÅÉÉúÍ°ÅÅĞòÑ§Éúc
+//æ´¾ç”Ÿæ¡¶æ’åºå­¦ç”Ÿc
 class student_c :public people
 {public:
-	//¹¹Ôìº¯Êıc
+	//æ„é€ å‡½æ•°c
 	student_c(string n, int a[10]) :people(n, a)
 	{
 		;
 	}
-	//ÉùÃ÷Í°ÅÅĞò
+	//å£°æ˜æ¡¶æ’åº
 	void barrel(int arr[], int length);
-	//×ö×÷ÒµÍ°ÅÅĞòc
+	//åšä½œä¸šæ¡¶æ’åºc
 	virtual void dohomework()
 	{
 		barrel(homework, 10);
 	}
 };
-//¡¾¼òµ¥µÄ£¨Ö»Õë¶ÔÕıÕûÊı£©¡¿Í°ÅÅĞò
+//ã€ç®€å•çš„ï¼ˆåªé’ˆå¯¹æ­£æ•´æ•°ï¼‰ã€‘æ¡¶æ’åº
 void student_c::barrel(int arr[], int length)
 {
 	int j,flag=0;
@@ -116,7 +116,7 @@ void student_c::barrel(int arr[], int length)
 	}
 
 }
-//¿ìËÙÅÅĞò
+//å¿«é€Ÿæ’åº
 void student_a::quickSort(int s[], int l, int r)
 {
 	if (l< r)
@@ -138,7 +138,7 @@ void student_a::quickSort(int s[], int l, int r)
 		quickSort(s, i + 1, r);
 	}
 }
-//²åÈëÅÅĞò
+//æ’å…¥æ’åº
 void student_b::insert(int arr[], int length)
 {
 	int j, key;
@@ -178,25 +178,26 @@ private:
 	student_c *c;
 
 };
-//Ö÷º¯Êı
+//ä¸»å‡½æ•°
 int main()
 {
 	
-	//¶¨Òå×÷Òµ
+	//å®šä¹‰ä½œä¸š
+	int blank[10] ={0, 0, 0, 0, 0, 0, 0, 0, 0, 0};//åˆå§‹åŒ–å­¦ç”Ÿä½œä¸šæœ¬ä¸ºç©º
 	int a[10] = { 123,3445,2343,55,2,45,1321,33,0,12 };
-	//¶¨ÒåÑ§Éú
-	student_a aa("daming", a);
-	student_b bb("erming", a);
-	student_c cc("sanming", a);
-	//¶¨ÒåÑ§ÉúÖ¸Õë
+	//å®šä¹‰å­¦ç”Ÿ
+	student_a aa("daming", blank);
+	student_b bb("erming", blank);
+	student_c cc("sanming", blank);
+	//å®šä¹‰å­¦ç”ŸæŒ‡é’ˆ
 	student_a *pa=&aa;
 	student_b *pb=&bb;
 	student_c *pc=&cc;
-	//¶¨ÒåÀÏÊ¦
+	//å®šä¹‰è€å¸ˆ
 	teacher laowang(pa, pb, pc);
-	//²¼ÖÃ×÷Òµ
+	//å¸ƒç½®ä½œä¸š
 	laowang.assign(a);
-	//×ö×÷Òµ²¢Êä³ö½á¹û
+	//åšä½œä¸šå¹¶è¾“å‡ºç»“æœ
 	pa->dohomework();
 	pa->disply();
 	pb->dohomework();
