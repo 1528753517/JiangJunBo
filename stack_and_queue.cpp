@@ -23,8 +23,71 @@ public:
 	linked();
 	//声明输出函数
 	int putout();
+private:
+	//声明增加
+	void Add(int n);
+	//声明删除
+	void Del(int num);
+	//声明修改
+	void Mod(int num, int n);
+	//声明查找
+	NODE* Che(int n);
 
 };
+//查找
+NODE* linked::Che(int n)
+{
+	NODE *prep = head;
+	while (prep->next != NULL)
+	{
+		if (prep->data == n)
+		{
+			return prep;
+		}
+	}
+	return NULL;
+}
+//修改
+void linked::Mod(int num, int n)
+{
+	NODE *prep = head->next;
+	for (int i = 0; i < num; i++)
+		prep = prep->next;
+	prep->data = n;
+
+
+}
+//增加
+void linked::Add(int n)
+{
+	NODE *prep = new NODE;
+	prep->data = n;
+	prep->next = nowend;
+	nowend = prep;
+	head->next = nowend;
+	
+	
+}
+//删除
+void linked::Del(int num)
+{
+	int i;
+	NODE *prep = head;
+	NODE *deld;
+	NODE *pre2;
+	for (i = 0; i < num-1; i++)
+	{
+		prep = prep->next;
+	}
+	deld = prep->next;
+	pre2 = prep;
+	prep = prep->next->next;
+	pre2->next = prep;
+	free(deld);
+
+
+}
+
 //输出函数
 int linked::putout()
 {
@@ -145,6 +208,7 @@ int main()
 {
 	Stack p;
 	Queue q;
+	linked l;
 	p.Push(12);
 	p.Push(99);
 	p.Pop();
@@ -158,6 +222,7 @@ int main()
 	q.Pop();
 	q.Push(999);
 	q.putout();
+	cout << "NEW" << endl;
 	getchar();
 	return 0;
 }
