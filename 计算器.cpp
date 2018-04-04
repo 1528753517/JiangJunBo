@@ -1,16 +1,17 @@
 #include<iostream>
 #include<string>
+#include<cmath>
 using namespace std;
 typedef struct nodeC
 {
 	char data;
 	nodeC* next;
-}NodeC,*PNodeC;
+}NodeC, *PNodeC;
 typedef struct nodeN
 {
 	double data;
 	nodeN* next;
-}NodeN,*PNodeN;
+}NodeN, *PNodeN;
 class Calculater
 {
 private:
@@ -56,11 +57,12 @@ void Calculater::changeFormula()
 		}
 		else
 		{
-			if (c == '(' || c == '*' || c=='/')
+			formula2.append(" ");
+			if (c == '(' || c == '*' || c == '/')
 				pushStackC(c);
-			else if (c == '+' || c=='-')
+			else if (c == '+' || c == '-')
 			{
-				while (getCtop() == '+' ||getCtop() == '-' ||getCtop()=='*' || getCtop() == '/')
+				while (getCtop() == '+' || getCtop() == '-' || getCtop() == '*' || getCtop() == '/')
 				{
 					save = popStackC();
 					formula2.append(save);
@@ -90,46 +92,52 @@ void Calculater::calculate()
 {
 	changeFormula();
 	char c;
-	double number,x,y;
+	double number, num;
+	int n, k;
 	initStackN();
 	for (int i = 0; i < formula2.length(); i++)
 	{
+		number = 0;
 		c = formula2[i];
-		if (c >= '0'&&c <= '9') //数字的字符转为十进制的数字
+		if (c>='0'&&c<='9') //数字的字符转为十进制的数字
 		{
-			number = c - 48;
+			for (n = i, k = 0; formula2[n] >= '0'&&formula2[n] <= '9'; n++, k++);
+			for (k--; k >= 0; k--,i++)
+			{
+				num = formula2[i] - 48;
+				number += pow(10, k)*num;
+			}
+			i--;
 			pushStackN(number);
 		}
-		else
+		else if(c=='+')
 		{
-			if (c == '+')
-			{
-				number = popStackN() + popStackN();
-				pushStackN(number);
-			}
-			else if (c == '-')
-			{
-				number = -(popStackN() - popStackN());
-				pushStackN(number);
-			}
-			else if (c == '*')
-			{
-				number = popStackN() * popStackN();
-				pushStackN(number);
-			}
-			else
-			{
-				number = (1 / popStackN()) * popStackN();
-				pushStackN(number);
-			}
+			number = popStackN() + popStackN();
+			pushStackN(number);
 		}
+		else if (c == '-')
+		{
+			number = -(popStackN() - popStackN());
+			pushStackN(number);
+		}
+		else if (c == '*')
+		{
+			number = popStackN() * popStackN();
+			pushStackN(number);
+		}
+		else if(c=='/')
+		{
+			number = (1 / popStackN()) * popStackN();
+			pushStackN(number);
+		}
+		else;
 	}
 	result = getNtop();
 	return;
 }
 void Calculater::outputResult()
 {
-	cout << "\n\t* Formula = " << result << "\n\n\t";
+	cout << "\n\n\t* Formula = " << result << "\n\n\t";
 	return;
 }
 void Calculater::initStackC()
@@ -150,7 +158,7 @@ char Calculater::popStackC()
 {
 	char c;
 	PNodeC p = new nodeC;
-	p = ctop; 
+	p = ctop;
 	c = p->data;
 	ctop = ctop->next;
 	delete p;
@@ -183,7 +191,7 @@ void Calculater::pushStackN(double n)
 }
 double Calculater::popStackN()
 {
-	int number;
+	double number;
 	PNodeN p = new nodeN;
 	p = ntop;
 	number = p->data;
