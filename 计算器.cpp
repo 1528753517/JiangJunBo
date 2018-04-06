@@ -1,152 +1,91 @@
 #include <iostream>
+#include<stack>
 using namespace std;
 
-template<class type>
-class stack
-{	
-	protected:
-		class node
-		{	
-			public:
-				type data;
-				node*next;
-		}*top;
-	public:
-		stack();
-		~stack();
-		bool empty();//判断是否为空
-		bool get_top(type&);//取栈顶元素
-		void push(type);//入栈
-		void pop(type&);//出栈 	
-		friend int evaluate();	
-};
-
-template<class type>
-stack<type>::stack()
-{                   
-		top=new node;
-		top=NULL;
+int check(char ch)
+{
+    return(ch=='+'||ch=='-'||ch=='*'||ch=='/'||ch=='('||ch==')'||ch=='#');
 }
 
-template<class type>
-stack<type>::~stack()
+char precede(char c1,char c2)
 {
-	node*p;
-	while(top)
-	{
-		p=top;
-		top=top->next;
-		delete p;
-	}
+	int i=0,j=0;
+    static char array[49]={ '>', '>', '<', '<', '<', '>', '>',
+                   			'>', '>', '<', '<', '<', '>', '>',
+                    		'>', '>', '>', '>', '<', '>', '>',
+                     		'>', '>', '>', '>', '<', '>', '>',
+                     		'<', '<', '<', '<', '<', '=', '!',
+                     		'>', '>', '>', '>', '!', '>', '>',
+                     		'<', '<', '<', '<', '<', '!', '='};
+    switch(c1)
+    {
+    case '+' :  i=0;break;
+    case '-' :  i=1;break;
+    case '*' :  i=2;break;
+    case '/' :  i=3;break;
+    case '(' :  i=4;break;
+    case ')' :  i=5;break;
+    case '#' :  i=6;break;
+    }
+    switch(c2)
+    {
+    case '+' :  j=0;break;
+    case '-' :  j=1;break;
+    case '*' :  j=2;break;
+    case '/' :  j=3;break;
+    case '(' :  j=4;break;
+    case ')' :  j=5;break;
+    case '#' :  j=6;break;
+    }
+    return (array[7*i+j]);
 }
 
-template<class type>
-bool stack<type>::empty()
+ int run(int a,char c,int b) 
 {
-	if(top)
-		return true;
-	return false;
-}
-
-template<class type>
-bool stack<type>::get_top(type&data)
-{
-	if(!empty())
-		{
-			data=top->data;
-			return true;
-		}
-	return false;
-}
-
-template<class type>
-void stack<type>::push(type data)
-{
-	top->data=data;
-	top=top->next;
-}
-
-template<class type>
-void stack<type>::pop(type&e)
-{
-	node*p;
-	p=top;
-	e=top->data;
-	top=top->next;
-	delete p;
-}
-
-bool checknum(char c)//判断数字
-{
-	if(c>='0'&&c<=9)
-		return true;
-	return false;
-}
-
-char precede(char c1,char c2)//判断运算符优先级 
-{
-	int m,n;
-	if(c1=='+'||c1=='-')m=3;
-	if(c1=='*'||c1=='/')m=5;
-	if(c1=='(')m=1;
-	if(c1==')')m=7;
-	if(c1=='#')m=0;
-	if(c1=='+'||c1=='-')n=2;
-	if(c1=='*'||c1=='/')n=4;
-	if(c1=='(')n=6;
-	if(c1==')')n=1;
-	if(c1=='#')n=0;
-	
-	if(m>n)
-		return '>';
-	else if(m==n)
-		return '=';
-	else
-		return '<';
-}
-
-int run(char c,int a,int b)
-{
-	switch(c)
-	{
-		case'+':return a+b;break;
-		case'-':return a-b;break;
-		case'*':return a*b;break;
-		case'/':return a/b;break;
-	}
+    switch(c)
+    {
+    case '+' :  return (a+b);
+    case '-' :  return (a-b);
+    case '*' :  return (a*b);
+    case '/' :  return (a/b);
+    }
+    return 0;
 }
 
 int evaluate()
 {	
-	stack<char>stack_char;
+	stack<char> stack_char;
+	stack<int> stack_int;
 	stack_char.push('#');
-	stack<int>stack_int;
-	char c,d,e;
 	int a,b;
+	char c,theta;
 	cin>>c;
-	while(c!='#'||(stack_char.get_top(e)&&e!='#'))
-	{	
-		stack_char.get_top(e);
-		if(checknum(c))
-			{
-				stack_int.push(c);
+	while(c!='#'||stack_char.top()!='#')	
+	{
+		if(!check(c))
+			{	
+				stack_int.push(c-'0');
 				cin>>c;
 			}
 		else
-			switch(precede(e,c))
+		{
+			switch(precede(stack_char.top(),c))
 			{
-				case'<':stack_char.push(c);cin>>c;break;
-				case'=':stack_char.pop(d);cin>>c;break;
-				case'>':stack_char.pop(d);stack_int.pop(a);stack_int.pop(b);stack_int.push(run(d,a,b));break;
+				case'<':stack_char.push(c);cin>>c;;break;
+				case'=':stack_char.pop();cin>>c;;break;
+				case'>':theta=stack_char.top();stack_char.pop();
+						a=stack_int.top();stack_int.pop();
+						b=stack_int.top();stack_int.pop();
+						stack_int.push(run(b,theta,a));break;
 			}
+		}
 	}
-	int x;
-	return stack_int.get_top(x);
+	return stack_int.top();	
 }
-
 
 int main()
 {	
-	evaluate();
+	cout<<"输入例子:3+2*1#"<<endl; 
+	cout<<evaluate();
 	return 0;
 }
